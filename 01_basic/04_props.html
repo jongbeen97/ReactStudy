@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  
+<div id="root1"></div>
+<div id="root2"></div>
+<div id="root3"></div>
+<div id="root4"></div>
+<div id="root5"></div>
+
+<script type="text/babel">
+
+  // props 기본 개념 
+
+  // props type 
+  /** 
+   * @typeof {Object} NameCardProps
+   * @Property {String} name 
+   * @Property {String} phone
+  */
+
+  /** @type {React.FC<NameCardProps>} */
+  const NameCard1 = ( props ) => {
+    return(
+      <>
+        <div>이름 {props.name}</div>
+        <div>전화번호 {props.phone}</div>
+      </>
+    );
+  }
+  
+  /** @type{string} */
+  const userName = "lee";
+  /** @type{string} */ 
+  const userPhone = '010-9120-6601';
+
+  ReactDOM.createRoot(document.getElementById('root1')).render([
+    <NameCard1 name={userName} phone={userPhone} />
+  ])    
+
+
+</script>
+
+</body>
+</html>
