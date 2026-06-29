@@ -18,7 +18,7 @@
 
 <script type="text/babel">
 
-  // props 기본 개념 
+  // ============= 1. props 기본 개념 ====================
 
   // props type 
   /** 
@@ -36,15 +36,111 @@
       </>
     );
   }
+
+   const NameCard2 = ( { name , phone } ) => {
+    return(
+      <>
+        <div>이름 {name}</div>
+        <div>전화번호 {phone}</div>
+      </>
+    );
+  } 
+
+     const NameCard3 = ( { name = "손흥민" , phone = "010-1234-5678" } ) => { // 디폴트 매개변수
+    return(
+      <>
+        <div>이름 {name}</div>
+        <div>전화번호 {phone}</div>
+      </>
+    );
+  } 
   
   /** @type{string} */
-  const userName = "lee";
+  const userName = "감스트";
   /** @type{string} */ 
-  const userPhone = '010-9120-6601';
+  const userPhone = '010-9999-9999';
 
   ReactDOM.createRoot(document.getElementById('root1')).render([
-    <NameCard1 name={userName} phone={userPhone} />
+    <NameCard1 name={userName} phone={userPhone} /> , // 컴포넌트로 name 과 폰 프로퍼티를 전달합니다 
+    <NameCard2 name={"홍명보"} phone={"010-1818-1818"} />,
+    <NameCard3 />,
   ])    
+
+  // ============ 2. props drilling =====================
+  // 하위 컴포넌트로 프로퍼티를 게속 전달하는 것을 의미합니다.
+  // props type 
+  /** 
+   * @typeof {Object} DrillingProps
+   * @property {string} data
+   */ 
+
+   /** @type {React.FC<DrillingProps>} */
+    const CompThree = ({data}) => {
+      return (
+        <>
+          <div>CompThree : {data}</div>
+        </>
+      );
+    } 
+   /** @type {React.FC<DrillingProps>} */
+    const CompTwo = ({data}) => {
+      return (
+        <>
+          <div>CompTwo : {data}</div>
+          <CompThree data={data} /> {/* 하위 컴포넌트로 값을 그대로 넘기는 것을 Drilling 이라고 합니다 (구멍 뚤어서 넘긴다) */}
+        </>
+      );
+    } 
+   /** @type {React.FC<DrillingProps>} */
+    const CompOne = ({ data }) => {
+      return (
+        <>
+          <div>CompOne : {data}</div>
+          <CompTwo data={data} /> {/* 하위 컴포넌트로 값을 그대로 넘기는 것을 Drilling 이라고 합니다 (구멍 뚤어서 넘긴다) */}
+        </>
+      );
+    } 
+
+    // 화면에 랜더링 할 컴포넌트 
+    /** @type{React.FC} */
+    const App = () => {
+      /** @type {string} */
+      const data = '홍명보 나가 ~ ';
+      return (
+        <CompOne data={data} />
+      );
+    }
+
+  ReactDOM.createRoot(document.getElementById('root2')).render(<App/>)
+
+
+// =============== 3. props Cildren =========================
+// 컴포넌트의 내부 요소를 말한다 
+
+// props type 
+/**
+ * @typeof {Object} ChildrenProps
+ * @property {React.ReactNode} children
+ */
+
+/** @type {React.FC<ChildrenProps>}*/
+const GiftCard1 = (props) =>{
+  return(
+    <p>{props.children}</p>
+);
+}
+
+/** @type {React.FC<ChildrenProps>}*/
+const GiftCard2 = ({children}) =>{
+  return(
+    <p>{children}</p>
+);
+}
+
+  ReactDOM.createRoot(document.getElementById('root3')).render([
+    <GiftCard1>5만원</GiftCard1>,
+    <GiftCard2><strong>10만원</strong></GiftCard2>,
+  ])
 
 
 </script>
