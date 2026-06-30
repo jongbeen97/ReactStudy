@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <script type="text/babel">
+  /** @type {any} */
+  const globalWindow = window;
+  const { React, ReactDOM } = globalWindow;
+</script>
+  
+<div id="root1"></div>
+<div id="root2"></div>
+<script type="text/babel" >
+
+  // 1. 기본 UseState 활용
+  /** @type {React.FC} */
+  const Counter = () =>{
+
+    // useState 
+    /** @type {[number, (value: number) => void]} */
+    const [myState, setMyState] = React.useState(0);
+
+    /** @param {React.MouseEvent<HTMLButtonElement>} e*/
+    const handleIncrement = (e) => {
+      //myState = myState +1; // (불가) 상태 변경은 반드시 상태 변경 함수를 사용해야 합니다. 
+      // setMyState(myState + 1); // (가능) 값을 전달하는 방법 
+      setMyState((prevState)=> prevState + 1); // (가능) 콜백 전달 : 실무 표준 
+    }
+
+    return (
+      <>
+        <h1>{myState}</h1>
+        <button onClick={handleIncrement}>+</button>
+      </>
+    )
+  }
+    ReactDOM.createRoot(document.getElementById('root1')).render(<Counter/>)
+
+  
+</script>
+
+</body>
+</html>
