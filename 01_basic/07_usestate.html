@@ -43,7 +43,26 @@
   }
     ReactDOM.createRoot(document.getElementById('root1')).render(<Counter/>)
 
-  
+  // 2. 입력 상자와 useState
+  /** @type {React.FC} */
+  const InputComponent = () =>{
+    /** @type {[string,(value: string) => void]} */
+    const [inputValue, setInputValue] = React.useState('');
+
+    // 입력상자에 입력한 내용이 변하면 발생하는 이벤트 핸들러( onChange )
+    /** @param {React.ChangeEvent<HTMLInputElement>} e */
+    const handleChange = (e) =>{
+      setInputValue(e.target.value)
+    }
+    return (
+      <>
+        <h1>{inputValue}</h1>
+        <input type={"text"} value={inputValue} onChange={handleChange}/>
+      </>
+    )
+  }
+      ReactDOM.createRoot(document.getElementById('root2')).render(<InputComponent/>)
+
 </script>
 
 </body>
